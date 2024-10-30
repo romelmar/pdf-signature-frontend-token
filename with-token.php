@@ -23,18 +23,17 @@
 
         if (response.ok) {
             // localStorage.setItem('token_esign', data.token);
-            alert(data.token);
 
-            setItemWithExpiration('token_esign', data.token, 5);// Set an item with a 4hors expiration
-            alert('Logged in successfully');
+
+            setItemWithExpiration('token_esign', data.token, 5); // Set an item with a 4hors expiration
+            console.log('Logged in successfully');
         } else {
             alert('Login failed');
         }
     }
 
-
     function fetchProtectedData() {
-        const token = localStorage.getItem('token_esign'); // Retrieve the token
+        const token = getItemWithExpiration('token_esign'); // Retrieve the token
 
         fetch('http://127.0.0.1:8000/api/sign-pdf', {
                 method: 'POST',
@@ -54,7 +53,7 @@
         fetch('http://127.0.0.1:8000/api/logout', {
                 method: 'POST',
                 headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token_esign')}`,
+                    'Authorization': `Bearer ${getItemWithExpiration('token_esign')}`,
                     'Content-Type': 'application/json'
                 }
             })
